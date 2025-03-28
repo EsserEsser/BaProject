@@ -1,0 +1,198 @@
+Long form
+
+GeV is used for energy/momentum/mass
+cm is used as spacial units
+
+General event variables:
+------------------------    
+    UChar_t         mcflavor;
+Type: Byte (/b)
+Description: Monte Carlo flavor tag. For MC events this indicates the quark flavor (1 = u, 2 = d, 3 = s, 4 = c, 5 = b). In non‐MC events it is set to 0.
+
+
+    Float_t         cmenergy;
+Type: Float (/F)
+Description: The center‐of-mass energy of the event (from the variable elep).
+
+
+    Float_t         thru[3];
+Type: Array of 3 Floats ("thru[3]/F")
+Description: The normalized thrust axis of the event, computed from polar angles (using cthr and phthr). The z component is forced positive.
+
+
+    Float_t         pquark[3];
+Type: Array of 3 Floats ("pquark[3]/F")
+Description: The momentum vector of the primary quark. In MC events it is taken from the true quark momentum (pq); otherwise it is set equal to the thrust axis.
+
+
+    Float_t         pudsh1;
+Type: Float (/F)
+Description: The negative logarithm (base 10) of the light quark probability in hemisphere 1. Values typically range between 0 and 25.
+
+
+    Float_t         pudsh2;
+Type: Float (/F)
+Description: The negative logarithm (base 10) of the light quark probability in hemisphere 2.
+
+
+    Float_t         b1nn;
+Type: Float (/F)
+Description: b-quark probability (from a neural network) for the jet in hemisphere 1. This is used as a b-tagging discriminator.
+
+
+    Float_t         b2nn;
+Type: Float (/F)
+Description: b-quark probability (from a neural network) for the jet in hemisphere 2.
+
+
+    Float_t         ch1nn;
+Type: Float (/F)
+Description: Neural network output for the jet charge in hemisphere 1 (typically 0 for negative and 1 for positive).
+
+
+    Float_t         ch2nn;
+Type: Float (/F)
+Description: Neural network output for the jet charge in hemisphere 2.
+
+
+    Float_t         pjet1[4];
+Type: Array of 4 Floats ("pjet1[4]/F")
+Description: The four-momentum (px, py, pz, energy) of the leading jet in hemisphere 1.
+
+
+    Float_t         pjet2[4];
+Type: Array of 4 Floats ("pjet2[4]/F")
+Description: The four-momentum (px, py, pz, energy) of the leading jet in hemisphere 2.
+
+    Float_t         pjet3[4];
+Type: Array of 4 Floats ("pjet3[4]/F")
+Description: The four-momentum of the third highest energy jet (or the highest energy jet not assigned to the two hemispheres). 
+
+
+    UShort_t        nbsv;
+Type: Short (/s)
+Description: The number of secondary vertex candidates (e.g., from b decays) in the event.
+
+
+    Float_t         pxbsv[2];   //[nbsv]
+Type: Array of Floats ("pxbsv[nbsv]/F")
+Description: The x-component of the momentum (or directional vector) associated with each secondary vertex, calculated by scaling the hadronic momentum along the direction from the primary vertex.
+
+
+    Float_t         pybsv[2];   //[nbsv]
+Type: Array of Floats ("pybsv[nbsv]/F")
+Description: The y-component corresponding to the secondary vertices.
+
+
+    Float_t         pzbsv[2];   //[nbsv]
+Type: Array of Floats ("pzbsv[nbsv]/F")
+Description: The z-component corresponding to the secondary vertices.
+
+
+    Float_t         lbsv[2];   //[nbsv]
+Type: Array of Floats ("lbsv[nbsv]/F")
+Description: The flight length (or decay length) of each secondary vertex.
+
+
+    Float_t         elbsv[2];   //[nbsv]
+Type: Array of Floats ("elbsv[nbsv]/F")
+Description: The uncertainty (error) on the flight length of each secondary vertex.
+
+
+    Float_t         chbsv[2];   //[nbsv]
+Type: Array of Floats ("chbsv[nbsv]/F")
+Description: The charge associated with each secondary vertex candidate (derived from the corresponding secondary vertex variable).
+
+
+    UChar_t         codebsv[2];   //[nbsv]
+Type: Array of Bytes ("codebsv[nbsv]/b")
+Description: A code representing the type or classification of the secondary vertex, possibly indicating the origin (e.g., nuclear interaction products).
+
+
+    UShort_t        npart;
+Type: Short (/s)
+Description: The number of measured particles ???
+
+
+    Float_t         pmomx[57];   //[npart]
+Type: Array of Floats ("pmomx[npart]/F")
+Description: The x-component of the momentum for each charged particle or V0 candidate.
+
+
+    Float_t         pmomy[57];   //[npart]
+Type: Array of Floats ("pmomy[npart]/F")
+Description: The y-component of the momentum for each candidate.
+
+
+    Float_t         pmomz[57];   //[npart]
+Type: Array of Floats ("pmomz[npart]/F")
+Description: The z-component of the momentum for each candidate.
+
+
+    Float_t         pmass[57];   //[npart]
+Type: Array of Floats ("pmass[npart]/F")
+Description: The assigned mass for each candidate. This mass is typically set based on the particle identification (e.g., pion, kaon, proton).
+
+
+    Float_t         pflight[57];   //[npart]
+Type: Array of Floats ("pflight[npart]/F")
+Description: The flight distance or decay length for each candidate, especially important for V0s where the decay vertex is displaced from the primary vertex.
+
+
+    UShort_t        nphot;
+Type: Short (/s)
+Description: The number of measured photons or π⁰ candidates in the event.
+
+
+    Float_t         pphotx[22];   //[nphot]
+Type: Array of Floats ("pphotx[nphot]/F")
+Description: The x-component of the momentum for each photon/π⁰ candidate.
+
+
+    Float_t         pphoty[22];   //[nphot]
+Type: Array of Floats ("pphoty[nphot]/F")
+Description: The y-component of the momentum for each photon/π⁰ candidate.
+
+
+    Float_t         pphotz[22];   //[nphot]
+Type: Array of Floats ("pphotz[nphot]/F")
+Description: The z-component of the momentum for each photon/π⁰ candidate.
+
+
+    UChar_t         pbits[57];   //[npart]
+Type: Array of Bytes ("pbits[npart]/b")
+Description: A set of bit flags for each charged particle or V0 candidate providing reconstruction information. The bits encode:
+Bit 0: Positive charge
+Bit 1: Not having hits in both Vdet projections
+Bit 2: Being displaced (distance > 2 mm in xy and 6 mm in z) from the vertex
+Bit 3: Lepton identification
+Bit 4: Having seven or fewer TPC hits
+Bit 5: A low primary vertex probability from VNFIT (< 1%)
+Bit 6: Being a daughter of a V0, Xsi, or "kink" candidate
+Bit 7: Being a product of a reconstructed nuclear interaction
+
+
+    UChar_t         ptype[57];   //[npart]
+Type: Array of Bytes ("ptype[npart]/b")
+Description: The best estimated particle identification for each candidate. The code values are:
+1: π⁺, 2: π⁻
+3: p, 4: p̄
+5: K⁺, 6: K⁻
+7: K⁰, 8: Λ, 9: Λ̄
+11: Photon conversion, 12: Unconverted photon
+13: e⁺, 14: e⁻
+15: μ⁺, 16: μ⁻
+17: D⁰, 18: D⁰̄, 19: Part of D⁰, 20: Part of D⁰̄
+21: Σ⁺, 22: Σ⁻
+23: Ξ⁻, 24: Ξ⁺ (or anti-Ξ⁺)
+0: No estimate
+
+
+    UChar_t         ptruth[57];   //[npart]
+Type: Array of Bytes ("ptruth[npart]/b")
+Description: The true (Monte Carlo) particle type for each candidate. This is used for validation and performance studies in MC.
+
+
+    UShort_t        pmoth[57];   //[npart]
+Type: Array of Shorts ("pmoth[npart]/s")
+Description: The mother (or parent) particle type/index for each candidate according to the Monte Carlo truth information, providing insight into the decay chain.

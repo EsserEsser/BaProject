@@ -1,0 +1,251 @@
+https://aleph.web.cern.ch/Aleph_Light/alpha.html
+https://aleph.web.cern.ch/aleph_general/phy/doc/alguide/alguide.html
+https://aleph.web.cern.ch/aleph_general/phy/doc/alguide/node321.html
+
+
+General event variables:
+------------------------
+   UInt_t          run;
+This is the run number, describing which run the data was taken during. For MC it is irrelevant (?)
+
+   UInt_t          evt;
+This is the event number in the run. Combined with the run number, this gives an event a unique ID.
+
+   UChar_t         mcflg;
+Flag to show, if the event is MC or real data.
+
+   Float_t         elep;
+Energy of the accelerator (LEP), which can be compared to the Z0 mass of around 91 GeV.
+
+   Float_t         vtx[3];
+Position (x,y,z) of the collision vertex.
+
+   Float_t         thr;
+   Float_t         cthr;
+   Float_t         phthr;
+Value of the thrust, cosine of the (theta) angle of the thrust axis, and the phi of the thrust axis.
+  The thrust is the axis along which the particles align best, i.e. the axis for which the projection onto this axis changes the least.
+  This means, that if the Z decays into two jets, which are back-to-back, then the thrust axis naturally lies along these two jets.
+
+   Float_t         puds;
+   Float_t         pudsh[2];
+The probability based on impact parameters (i.e. at vertex) of the Z0 decay being to u, d, or s quark pairs, both overall and for each hemisphere.
+
+   UChar_t         flevt;
+This contains the flavor (i.e. quark type) that the Z-decay was generated with (1: up, 2: down, 3: strange, 4: charm, 5: bottom)
+Of course, this value only exists for MC, not data.
+
+   Float_t         pq[3];
+   Float_t         pqbar[3];
+   Float_t         pqfin[3];
+   Float_t         pqbfin[3];
+Truth values for the quark and the anti-quark (bar) 
+
+
+Hemisphere variables:
+---------------------
+The hemisphere is a way of dividing the event into two parts (hemispheres)
+   Int_t           nbhem;
+   Float_t         pbhad[2];   //[nbhem]     ChiSquare Fit Probability of secondary vertex
+   Float_t         lbhad[2];   //[nbhem]     Length of decay of secondary vertex
+   Float_t         elbhad[2];   //[nbhem]    Error on Length of decay of secondary vertex
+   Float_t         strkw[2];   //[nbhem]     Secondary track weight???
+   Float_t         svpro[2];   //[nbhem]     Secondary vertex probability???
+   Float_t         svpos[2][3];   //[nbhem]  Secondary vertex position (x,y,z)
+   Float_t         chjet[2][4];   //[nbhem]  Charge of jet (weighted in four different ways)???
+   Float_t         chpri[2];   //[nbhem]     Charge of primary vertex particles???
+   Float_t         chsec[2];   //[nbhem]     Charge of secondary vertex
+   Float_t         dedxk[2];   //[nbhem]     Combination of dE/dx measurement for Kaon candidates???
+   Float_t         vncha[2];   //[nbhem]     charge of something???
+   Float_t         chnn[2];   //[nbhem]      Neural Network charge estimate (made for b vs. bbar identification)
+   Float_t         chnl[2];   //[nbhem]      Lepton-based charge estimate (made for b vs. bbar identification)
+   UChar_t         Mcbcod[2];   //[nbhem]    Truth information from MC on the PID of the B-hadron (special Aleph encoding, not PDG-ID, sigh!)
+   Float_t         Mcbmom[2];   //[nbhem]    Truth information from MC on the B-hadron momentum
+   Float_t         Mcblen[2];   //[nbhem]    Truth information from MC on the B-hadron decay length
+
+
+Heavy flavor decays:
+--------------------
+List of secondary vertexes, which result from heavy quark flavor (b and c quarks) decays (i.e. not the "simple" V0s).
+   Int_t           nhvf;
+   UChar_t         idhf[7];   //[nhvf]       Identity of heavy flavor
+   UChar_t         nchf[7];   //[nhvf]       Number of charged tracks from the secondary vertex
+   UChar_t         nnhf[7];   //[nhvf]       Number of neutral clusters from the secondary vertex
+   Float_t         tlhf[7];   //[nhvf]       ???
+   Float_t         zfhf[7];   //[nhvf]       ???
+
+
+Charged particles (tracks):
+---------------------------
+List of tracks from charged particles (neutral particles do not leave any tracks).
+   Int_t           ncha;
+   UChar_t         Idch[127];   //[ncha]     Identification of charged particle (Aleph encoding: pi, K, p, e, mu)
+   Float_t         pcha[127][3];   //[ncha]  Momentum (px,py,pz) of charged particle
+   Float_t         Ripi[127];   //[ncha]     ((dE/dx)_measured - (dE/dx)_predicted(for pion) / uncertainty(dE/dx)_predicted(for pion)
+   Float_t         Rik[127];   //[ncha]      ((dE/dx)_measured - (dE/dx)_predicted(for kaon) / uncertainty(dE/dx)_predicted(for kaon)
+   Float_t         Ripr[127];   //[ncha]     ((dE/dx)_measured - (dE/dx)_predicted(for proton) / uncertainty(dE/dx)_predicted(for proton)
+   Float_t         Riel[127];   //[ncha]     ((dE/dx)_measured - (dE/dx)_predicted(for electron) / uncertainty(dE/dx)_predicted(for electron)
+   Float_t         Pbdec[127];   //[ncha]    Probablity of coming from a b-quark decay.
+   UShort_t        Mctyp[127];   //[ncha]    Truth about track type (Aleph encoding)
+   UShort_t        Mcmot[127];   //[ncha]    Truth about mother type of track (Aleph encoding)
+   UShort_t        Mcgmo[127];   //[ncha]    Truth about grand mother type of track (Aleph encoding)
+   
+
+Leptons (electrons and muons):
+------------------------------
+List of electrons and muons, with a pointer to (i.e. number of) the corresponding track (both electrons and muons are charged and have a track).
+   Int_t           nlep;
+   UChar_t         Ileptr[10];   //[nlep]    Pointer to list of tracks corresponding to lepton
+   UChar_t         Idlept[10];   //[nlep]    Identification of lepton flavor (Aleph encoding)
+   Float_t         ptlex[10];   //[nlep]     Lepton pT relative to the jet axis, EXCLUDING the lepton itself
+   Char_t          Mclhf[10];   //[nlep]     Truth code about which heavy flavor the lepton is coming from???? (Aleph encoding)
+   UChar_t         Mclsp[10];   //[nlep]     Truth about ???
+   Char_t          Mclbq[10];   //[nlep]     Truth about b charge???
+
+
+Jets (as defined by the Jade jet reconstruction algorithm):
+-----------------------------------------------------------
+List of jets, which are "sprays" of particles (mainly made out of quarks), which result from single quarks flying away at high energy.
+As quarks can not exist by themselves, 
+   Int_t           njade;
+   Float_t         pjet[30][3];   //[njade]  Jet momentum
+   Float_t         ejet[30];   //[njade]     Jet energy
+   Float_t         projet[30];   //[njade]   Jet probability of being from a b-quark 
+   Float_t         sphjet[30];   //[njade]   Jet sphericity
+   Float_t         pt2jet[30];   //[njade]   Jet transverse momentum squared (sum)
+   Float_t         muljet[30];   //[njade]   Jet multiplicity (weighted)
+   Float_t         bqvjet[30];   //[njade]   Jet probability of having a b-quark vertex???
+   Float_t         ptljet[30];   //[njade]   Pt of lepton in jet (relative to the jet axis)
+   Float_t         nnbjet[30];   //[njade]   Neural Network probability for being a b-quark jet (based on the six variables above)
+   
+
+Neutral particles (clusters, i.e. photons):
+-------------------------------------------
+List of clusters (energy in calorimeter, which does not have a track leading to it), which essentially is a list of photons.
+Note that the relative energy resolution of photons, sigma(E_gamma) / E (e.g. 20% if the energy is 100 +- 20 MeV), improves with sqrt(E),
+thus higher energy photons are more well measured. The particles decaying to two photons are pi0 (139 MeV) and eta0 (about 548 MeV).
+   Int_t           ngam;
+   Float_t         pgam[120][3];   //[ngam]
+
+
+Variables for V0 particles:
+---------------------------
+V0 are defined as neutral particles, that fly a small but significant distance, and then decay/interact to produce
+a positive and negative particle, which leaves a track each, that can be used to determine the point of decay/interaction.
+The candidate V0 partciles are: K_short (two pions), Lambda (proton + pion), and photon (e+e-)
+   Int_t           nyrm;
+Number of V0 candidates.
+
+   UChar_t         Idyr[20];   //[nyrm]
+ID of the V0 candidate as determined by the Aleph Collaboration (7: K0, 8: Lambda, 9: Lambdabar, 11: photon conversion)
+
+   UShort_t        Iyrptr[20];   //[nyrm]
+   UShort_t        Iyrntr[20];   //[nyrm]
+Pointers to the positive and negative track of the V0 candidates.
+Thus, with these variables, one can find information about the individual tracks.
+
+   Float_t         Xyr[20][3];   //[nyrm]
+   Float_t         Pyr[20][3];   //[nyrm]
+Decay position (x, y, z) [in mm???] and momentum (px, py, pz) [in GeV] of V0 candidate.
+      NOTE: From these variables, one can calculate the cosine of the opening angle between vector(VTX_Z0, VTX_V0) and vector(p_V0 = p_track+ + p_track-).
+            This variable should be close to 1, and is very good for selecting true V0 candidates.
+
+   Float_t         Massyr[20][3];   //[nyrm]
+Masses of the V0 candidates under the three V0 assumptions (??? 0: photon->e+ e-, 1: Kshort -> pi+ pi-, 2: Lambda -> p+- pi-+) 
+
+   Float_t         Cdanyr[20];   //[nyrm]
+   Float_t         Phiyr[20];   //[nyrm]
+Cosine to opening angle (theta) and the azimuth angle (phi) between the positive track momentum in the V0 rest frame, and the V0 momentum.
+While the azimuth (phi) angle should have a flat distribution, cosine of the opening angle tells something about the spin of the decaying particle.
+
+   Float_t         Chiyr[20];   //[nyrm]
+ChiSquare of the vertex fit between the two charged tracks. Should be low'ish, and not too much higher than Ndof(vtx fit) = 5???
+
+   UShort_t        Mcvtyp[20];   //[nyrm]
+   UShort_t        Mcvmot[20];   //[nyrm]
+   Float_t         Mcvcd[20];   //[nyrm]
+Truth varibles for V0 type, V0 mother type, and V0 cosine opening angle (i.e. truth for Cdanyr).
+
+
+Variables for Xsi particles:
+----------------------------
+   Int_t           nxsi;
+   UChar_t         Idxs[5];   //[nxsi]     Identification of Xsi (Aleph encoding)
+   UChar_t         Itrxsi[5];   //[nxsi]   Pointer to track associated with Xsi
+   UChar_t         Iv0xsi[5];   //[nxsi]   Pointer to V0 associated with Xsi
+   Float_t         Xxsi[5][3];   //[nxsi]  Vertex position of Xsi (x,y,z)
+   Float_t         Pxsi[5][3];   //[nxsi]  Momentum of Xsi (px,py,pz)
+   Float_t         Chixsi[5];   //[nxsi]   ChiSquare value of Xsi vertex fit
+   Float_t         Massxs[5];   //[nxsi]   Invariant mass of Xsi candidate
+   Float_t         Pxpi[5][3];   //[nxsi]  Momentum of pi in decay (px,py,pz)
+   UShort_t        Mcxtyp[5];   //[nxsi]   Truth on Xsi type (Aleph encoding)
+   UShort_t        Mcxmot[5];   //[nxsi]   Truth on Xsi mother (Aleph encoding)
+   Float_t         Mcxcd[5];   //[nxsi]    Truth on 
+   
+
+Variables for Lambda-b particles:
+---------------------------------
+   Int_t           nlamb;
+   UChar_t         Ileplb[5];   //[nlamb]  Identification of lambda-b (Aleph encoding)
+   UChar_t         Ipilb[5];   //[nlamb]   Pointer to track
+   UChar_t         Iv0lb[5];   //[nlamb]   Pointer to ?
+   Float_t         Chi2lb[5];   //[nlamb]  ChiSquare value of lambda-b vertex fit
+   Float_t         Dislb[5];   //[nlamb]   Distance of flight of lambda-b ???
+   Float_t         Dellb[5];   //[nlamb]   Error on distance of flight of lambda-b ???
+   UShort_t        Mclbmt[5];   //[nlamb]
+   UShort_t        Mclbgt[5];   //[nlamb]
+   UShort_t        Mclblt[5];   //[nlamb]
+   Float_t         Mclbel[5];   //[nlamb]
+   Float_t         Mclben[5];   //[nlamb]
+
+
+Variables for "kink" tracks:
+----------------------------
+Tracks with "kinks" originate from charged particles that decay to a charged and a neutral particle.
+An example of this is: Sigma+ -> p+ + pi0 or n + pi+ (proton or neutron plus pion). Since the pi0 or neutron goes unseen,
+while the new charged particle from the decay (proton or pi+), this is seen as a kink in the track.
+NOTE: These variables are rarely used!
+   Int_t           nknk;
+   UShort_t        Idkn[5];   //[nknk]
+   UChar_t         Iinkn[5];   //[nknk]
+   UChar_t         Ioutkn[5];   //[nknk]
+   Float_t         Xkn[5][3];   //[nknk]
+   Float_t         Pkn[5];   //[nknk]
+   Float_t         Plkn[5];   //[nknk]
+   Float_t         Ptkn[5];   //[nknk]
+   Float_t         Chi2kn[5];   //[nknk]
+   UShort_t        Mcktyp[5];   //[nknk]
+   UShort_t        Mckmot[5];   //[nknk]
+   UShort_t        Mckdch[5];   //[nknk]
+   UShort_t        Mckdne[5];   //[nknk]
+   Float_t         Mckcd[5];   //[nknk]
+
+
+Variables for Dstar decays:
+---------------------------
+List of D*+- -> D0 + pi+- decays with a kinematic fit applied to it.
+   Int_t           ndst;
+   UChar_t         I1dst[10];   //[ndst]
+   UChar_t         I2dst[10];   //[ndst]
+   Float_t         Chidst[10];   //[ndst]
+   Float_t         Disdst[10];   //[ndst]
+   Float_t         Deldst[10];   //[ndst]
+   Float_t         Md0dst[10];   //[ndst]
+   Float_t         Pdst[10][3];   //[ndst]
+   UShort_t        Mcdtyp[10];   //[ndst]
+   UShort_t        Mcdmot[10];   //[ndst]
+   Float_t         Mcdcd[10];   //[ndst]
+
+
+Variables for lambda-c particles:
+---------------------------------
+   Int_t           nlamc;
+   UChar_t         I1lc[20];   //[nlamc]
+   UChar_t         I2lc[20];   //[nlamc]
+   UChar_t         I3lc[20];   //[nlamc]
+   Float_t         Chilc[20];   //[nlamc]
+   Float_t         Dislc[20];   //[nlamc]
+   Float_t         Dellc[20];   //[nlamc]
+   Float_t         Masslc[20];   //[nlamc]
+   UShort_t        Mclcmt[20];   //[nlamc]
+   UShort_t        Mclcgt[20];   //[nlamc]
